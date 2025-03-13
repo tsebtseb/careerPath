@@ -29,7 +29,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
+type Salary = {
+  year: number;
+  level?: string;
+  jobTitleWithLevel?: string;
+  salary: number | null;
+  yearlySalary?: number;
+  salarybonus?: number;
+};
 
+type userSalary={
+  year: number;
+  salary: number;
+  yearlySalary: number;
+  salarybonus: number;
+  totalsalarybonus: number;
+
+}
 interface SalaryData{
   year: number;
   jobSalary: number;
@@ -487,31 +503,9 @@ export default function Home() {
 
   const [compareisVisible, setcompareIsVisible] = useState(false);
 
-  const [salaries, setSalaries] = useState<
-    Array<
-      | { year: number; level: string; salary: null }
-      | {
-          jobTitleWithLevel: string;
-          year: number;
-          salary: number;
-          yearlySalary: number;
-          salarybonus: number;
-        }
-    >
-  >([]);
+  const [salaries, setSalaries] = useState<Salary[]>([]);
 
-  const [usersalaries, setuserSalaries] = useState<
-    Array<
-      | { year: number; salary: null }
-      | {
-          year: number;
-          salary: number;
-          yearlySalary: number;
-          salarybonus: number;
-          totalsalarybonus: number;
-        }
-    >
-  >([]);
+  const [usersalaries, setuserSalaries] = useState<userSalary[]>([]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({ jobtitle: "", salary: "" });
@@ -532,6 +526,11 @@ export default function Home() {
       return;
     }
 
+    if (!jobtitle || !salaryType) {
+      console.error("Job title and Salary Type are required");
+      return;
+    }
+
     console.log("Job Title:", jobtitle);
     console.log("Salary:", salaryType);
     console.log("Bonus:", bonus);
@@ -545,8 +544,14 @@ export default function Home() {
   const compareUserInput = (e: React.FormEvent) => {
     e.preventDefault();
     setuserErrors("");
-    if (user_salary <= 0) {
+    if (user_salary <= 0 || isNaN(user_salary)) {
       setuserErrors("Please enter a valid salary.");
+      setcompareIsVisible(false);
+      return;
+    }
+
+    if (isNaN(user_percentRaise) || isNaN(user_bonus)) {
+      setuserErrors("Please enter valid values for percent raise and bonus.");
       setcompareIsVisible(false);
       return;
     }
@@ -556,21 +561,26 @@ export default function Home() {
     console.log("User Bonus:", user_bonus);
 
     const result = calculateCompareSalaries(
-      user_salary,
-      user_bonus,
-      user_percentRaise
+      Number(user_salary),
+      Number(user_bonus),
+      Number(user_percentRaise)
     );
     setuserSalaries(result);
     console.log(result);
     setcompareIsVisible(true);
   };
 
-  const calculateSalaries = (jobtitle, salaryType, bonus, percentRaise) => {
+  const calculateSalaries = (
+    jobtitle: string,
+    salaryType: string,
+    bonus: number,
+    percentRaise: number
+  ): Salary[] => {
     const job = jobData.find((j) => j.job === jobtitle);
     if (!job) return [];
 
-    let salary = null;
-    let lastLevel = null;
+    let salary: number | null = null;
+    let lastLevel: string | null = null;
 
     return Array.from({ length: 10 }, (_, index) => {
       const year = index + 1;
@@ -621,12 +631,12 @@ export default function Home() {
   };
 
   const calculateCompareSalaries = (
-    user_salary,
-    user_bonus,
-    user_percentRaise
+    user_salary: number,
+    user_bonus: number,
+    user_percentRaise: number
   ) => {
     let salary = user_salary;
-    let previousSalary = null;
+    let previousSalary: number | null = null;;
 
     return Array.from({ length: 10 }, (_, index) => {
       const year = index + 1;
@@ -634,8 +644,7 @@ export default function Home() {
       if (salary !== null) {
         if (previousSalary !== null) {
           salary = Math.round(
-            parseFloat(previousSalary) +
-              (parseFloat(previousSalary) * user_percentRaise) / 100
+            previousSalary + (previousSalary * user_percentRaise) / 100
           );
         }
         previousSalary = salary;
@@ -740,7 +749,7 @@ export default function Home() {
                     type="number"
                     step="0.1"
                     value={percentRaise}
-                    onChange={(e) => setPercentRaise(e.target.value)}
+                    onChange={(e) => setPercentRaise(Number(e.target.value))}
                     required
                     min="0"
                     name="percentRaise"
@@ -756,7 +765,7 @@ export default function Home() {
                     step="0.1"
                     name="bonus"
                     value={bonus}
-                    onChange={(e) => setBonus(e.target.value)}
+                    onChange={(e) => setBonus(Number(e.target.value))}
                     required
                     min="0"
                     placeholder="months"

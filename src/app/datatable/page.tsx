@@ -445,8 +445,8 @@ export default function DataSource() {
     },
   ];
 
-  const [expandedRows, setExpandedRows] = useState({});
-  const toggleRow = (id) => {
+  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
+  const toggleRow = (id: string) => {
     setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
