@@ -36,6 +36,7 @@ type Salary = {
   salary: number | null;
   yearlySalary?: number;
   salarybonus?: number;
+  totalsalarybonus?: number;
 };
 
 type userSalary={
@@ -623,9 +624,9 @@ export default function Home() {
         jobTitleWithLevel,
         year,
         salary,
-        yearlySalary,
-        salarybonus,
-        totalsalarybonus,
+        yearlySalary: yearlySalary || 0,
+        salarybonus: salarybonus || 0,
+        totalsalarybonus: totalsalarybonus || 0,
       };
     });
   };
@@ -824,11 +825,11 @@ export default function Home() {
               <div className="flex flex-row items-center my-4 justify-between">
                 <h1 className="mt-1 p-2 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 rounded-lg border-2 shadow-lg border-gray-300">
                   <b>Total: </b>
-                  {salaries.reduce((sum, row) => sum + row.yearlySalary, 0)}
+                  {salaries.reduce((sum, row) => sum + (row.yearlySalary || 0), 0)}
                 </h1>
                 <h1 className="mt-1 p-2 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 rounded-lg border-2 shadow-lg border-gray-300">
                   <b>Total(with bonus): </b>
-                  {salaries.reduce((sum, row) => sum + row.totalsalarybonus, 0)}
+                  {salaries.reduce((sum, row) => sum + (row.totalsalarybonus || 0), 0)}
                 </h1>
               </div>
             </div>
@@ -850,7 +851,7 @@ export default function Home() {
                     <Input
                       type="number"
                       value={user_salary}
-                      onChange={(e) => setUserSalary(e.target.value)}
+                      onChange={(e) => setUserSalary(Number(e.target.value))}
                       required
                       min="0"
                       id="user_salary"
@@ -866,7 +867,7 @@ export default function Home() {
                     <Input
                       type="number"
                       value={user_percentRaise}
-                      onChange={(e) => setUserPercentRaise(e.target.value)}
+                      onChange={(e) => setUserPercentRaise(Number(e.target.value))}
                       required
                       min="0"
                       id="user_salary"
@@ -878,7 +879,7 @@ export default function Home() {
                     <Input
                       type="number"
                       value={user_bonus}
-                      onChange={(e) => setUserBonus(e.target.value)}
+                      onChange={(e) => setUserBonus(Number(e.target.value))}
                       required
                       min="0"
                       id="user_salary"
@@ -929,11 +930,11 @@ export default function Home() {
               <div className="flex flex-row items-center my-4 justify-between">
                 <h1 className="mt-1 p-2 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 rounded-lg border-2 shadow-lg border-gray-300">
                   <b>Total: </b>
-                  {usersalaries.reduce((sum, row) => sum + row.yearlySalary, 0)}
+                  {usersalaries.reduce((sum, row) => sum + (row.yearlySalary || 0), 0)}
                 </h1>
                 <h1 className="mt-1 p-2 bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 rounded-lg border-2 shadow-lg border-gray-300">
                   <b>Total(with bonus): </b>
-                  {usersalaries.reduce((sum, row) => sum + row.totalsalarybonus, 0)}
+                  {usersalaries.reduce((sum, row) => sum + (row.totalsalarybonus || 0), 0)}
                 </h1>
               </div>
             </div>
@@ -943,8 +944,8 @@ export default function Home() {
             <h1 className="mt-1 p-2 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 rounded-lg border-2 shadow-lg border-gray-300">
               <b>Different: </b>
               {(
-                usersalaries.reduce((sum, row) => sum + row.yearlySalary, 0) -
-                salaries.reduce((sum, row) => sum + row.yearlySalary, 0)
+                usersalaries.reduce((sum, row) => sum + (row.yearlySalary || 0), 0) -
+                salaries.reduce((sum, row) => sum + (row.yearlySalary || 0), 0)
               ).toLocaleString()}
             </h1>
           </div>
