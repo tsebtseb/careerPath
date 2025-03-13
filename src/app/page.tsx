@@ -27,7 +27,6 @@ import {
 } from "@/components/ui/chart"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 
@@ -516,7 +515,7 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({ jobtitle: "", salary: "" });
-    let formErrors = { jobtitle: "", salary: "" };
+    const formErrors = { jobtitle: "", salary: "" };
     if (!jobtitle) {
       formErrors.jobtitle = "Job title is required.";
       setresultIsVisible(false);
