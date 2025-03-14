@@ -462,7 +462,7 @@ export default function DataSource() {
         </div>
         </Link>
       </div>
-        <Table className="bg-white mt-2 border-gray-100 border">
+        <Table className="bg-white mt-2 border-gray-100 border max-h-auto m-2">
           <TableHeader className="bg-[#e3e1e1]">
             <TableRow>
               <TableHead className="border border-gray-100 text-black">
@@ -501,7 +501,7 @@ export default function DataSource() {
                         Years of Experience
                       </TableHead>
                       <TableHead className="border border-gray-300">
-                        Salary (Bath)
+                        Salary (Baht)
                       </TableHead>
                     </TableRow>
 
@@ -514,7 +514,7 @@ export default function DataSource() {
                         <TableCell className="pl-10">{child.level}</TableCell>
                         <TableCell> {child.year[0]} - {child.year[child.year.length - 1]} years</TableCell>
                         <TableCell>
-                          {child.min_salary} - {child.max_salary} Bath
+                          {child.min_salary} - {child.max_salary} THB
                         </TableCell>
                       </TableRow>
                     ))}

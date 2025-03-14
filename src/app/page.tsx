@@ -953,7 +953,7 @@ export default function Home() {
           <Card>
       <CardHeader>
         <CardTitle>Salary Comparison</CardTitle>
-        <CardDescription>show comparison of the salary for each year as line chart.</CardDescription>
+        <CardDescription>show line chart comparing salaries by year.</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
