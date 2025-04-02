@@ -5,7 +5,7 @@ import EscapeLogo from "/public/escape path.png";
 import Link from "next/link";
 export default function Navbar() {
   return (
-    <div className="bg-white/10 backdrop-blur-md p-4 pt-4 pb-3.5 border border-white/20 shadow-2xl rounded-xl mx-8 mb-8">
+    <div className="bg-white/10 backdrop-blur-md px-4 py-2 border border-white/20 shadow-2xl rounded-xl mx-4 mb-8">
       <div className="container flex justify-between items-center mx-auto">
         <Link href="/">
           <div className="flex space-x-4 items-center">

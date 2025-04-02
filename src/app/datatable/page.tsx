@@ -454,15 +454,18 @@ export default function DataSource() {
     <section className="escape overlay top-0 min-h-screen w-screen bg-cover bg-center bg-no-repeat">
       <Navbar />
       <div className="overflow-y-scroll overflow-x-auto mx-8 flex flex-col items-center justify-center">
-      <div className="container my-2 flex bg-white/50 shadow-md backdrop-blur-md border-gray-300 border rounded-lg mx-4 p-4 items-center justify-center">
-        <Link href="https://www.ismtech.net/th/it-salary-report/">
+        <div className="container my-2 flex bg-white/50 shadow-md backdrop-blur-md border-gray-300 border rounded-lg mx-4 p-4 items-center justify-center">
+          <Link href="https://www.ismtech.net/th/it-salary-report/">
             <div className="flex-col items-center text-center">
-            <h1 className="font-bold text-xl"> Data Table</h1>
-            <p>According to the report on the salaries of people in the IT industry in 2567</p>
+              <h1 className="font-bold text-xl"> Data Table</h1>
+              <p>
+                According to the report on the salaries of people in the IT
+                industry in 2567
+              </p>
+            </div>
+          </Link>
         </div>
-        </Link>
-      </div>
-        <Table className="bg-white mt-2 border-gray-100 border max-h-auto m-2">
+        <Table className="bg-white mt-2 border-gray-100 border max-h-auto m-2 mb-8">
           <TableHeader className="bg-[#e3e1e1]">
             <TableRow>
               <TableHead className="border border-gray-100 text-black">
@@ -512,7 +515,11 @@ export default function DataSource() {
                         className="bg-gray-100"
                       >
                         <TableCell className="pl-10">{child.level}</TableCell>
-                        <TableCell> {child.year[0]} - {child.year[child.year.length - 1]} years</TableCell>
+                        <TableCell>
+                          {" "}
+                          {child.year[0]} - {child.year[child.year.length - 1]}{" "}
+                          years
+                        </TableCell>
                         <TableCell>
                           {child.min_salary} - {child.max_salary} THB
                         </TableCell>
